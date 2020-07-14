@@ -5,7 +5,7 @@ export async function fetcher(url: string, data = undefined) {
         headers: {
             "Content-Type": "application/json"
         },
-        body: data
+        body: JSON.stringify(data)
     })
 
     return await response.json();
