@@ -30,7 +30,7 @@ export default function TweetForm() {
                 value={tweet}
                 onChange={e => setTweet(e.target.value)}
             />
-            <Button style='blue' onClick={handleSubmit}>
+            <Button buttonStyle='blue' onClick={handleSubmit}>
                 {isLoading && 'Tweeting...'}
                 {!isLoading && 'Tweet'}
             </Button>

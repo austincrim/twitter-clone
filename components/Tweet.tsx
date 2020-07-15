@@ -23,7 +23,7 @@ export default function Tweet({ tweet }) {
                 <div className='text-lg'>{text}</div>
                 <div className='text-sm text-gray-600'>{author}</div>
             </div>
-            <Button style='red' onClick={handleDelete}>
+            <Button buttonStyle='red' onClick={handleDelete}>
                 {isLoading && 'Deleting...'}
                 {!isLoading && 'Delete'}
             </Button>
