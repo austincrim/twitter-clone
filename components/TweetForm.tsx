@@ -11,6 +11,7 @@ export default function TweetForm() {
     const [tweet, setTweet] = useState('');
     const [mutate, { isLoading }] = useMutation(createTweet, {
         onSuccess: () => {
+            console.log('invalidation')
             queryCache.invalidateQueries('/api/feed');
         },
     });

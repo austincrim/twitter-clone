@@ -11,7 +11,6 @@ export default function Index() {
     } else if (status === 'error') {
         statusMessage = <div>Error: {error.message}</div>;
     }
-
     return (
         <>
             <div className='grid grid-cols-3 gap-20'>
@@ -21,10 +20,10 @@ export default function Index() {
                 <div className='flex flex-col col-span-2 items-start mt-10 space-y-2'>
                     <TweetForm />
                     {status !== 'success' && statusMessage}
-                    {status === 'success' &&
+                    {/* {status === 'success' &&
                         feed.map(tw => (
                             <Tweet tweet={tw} key={tw.text + tw.author} />
-                        ))}
+                        ))} */}
                 </div>
             </div>
         </>

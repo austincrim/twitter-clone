@@ -1,11 +1,25 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient();
+import { NextApiRequest, NextApiResponse } from 'next';
+import { MongoClient } from 'mongodb';
+import url from 'url';
+let cachedDb = null;
+
+async function connectToDatabase(uri: string) {
+    if (cachedDb) {
+        return cachedDb;
+    }
+
+    const client = await MongoClient.connect(uri, { useNewUrlParser: true });
+
+    const db = client.db(url.parse(uri).pathname.substr(1));
+
+    cachedDb = db;
+    return db;
+}
 
 export default async function feed(req: NextApiRequest, res: NextApiResponse) {
-    const feed = await prisma.tweet.findMany({
-        orderBy: { createdAt: 'desc' }
-    })
-    
-    res.send(JSON.stringify(feed));
+    const db = await connectToDatabase(process.env.MONGO_CONNECTION_URI);
+    const collection = await db.collection('tweets');
+    const tweets = await collection.find({}).toArray();
+    if (tweets.length === 0) res.send(undefined)
+    res.send(JSON.stringify(tweets));
 }
