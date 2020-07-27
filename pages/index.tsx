@@ -17,13 +17,13 @@ export default function Index() {
                 <div className='mt-2 w-1/2 py-6 px-10'>
                     <SignupForm />
                 </div>
-                <div className='flex flex-col col-span-2 items-start mt-10 space-y-2'>
+                <div className='flex flex-col col-span-2 items-start mt-10 space-y-4'>
                     <TweetForm />
                     {status !== 'success' && statusMessage}
-                    {/* {status === 'success' &&
+                    {status === 'success' &&
                         feed.map(tw => (
                             <Tweet tweet={tw} key={tw.text + tw.author} />
-                        ))} */}
+                        ))}
                 </div>
             </div>
         </>
