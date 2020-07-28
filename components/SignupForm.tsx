@@ -12,10 +12,10 @@ export default function SignupForm() {
     const [password, setPassword] = useState('');
     const [mutate, { error, isLoading, data, reset }] = useMutation(createUser);
 
-    async function handleSignup(e) {
+    async function handleSignup(e: Event) {
         e.preventDefault();
         reset();
-        
+
         if (username && password) {
             await mutate({ username, password });
             setUsername('');
@@ -46,8 +46,14 @@ export default function SignupForm() {
                 Sign Up
             </Button>
             <div>
-                {error && <span className='text-red-400'>Username already taken.</span>}
-                {data && !isLoading && <span className='text-green-400'>Account created!</span>}
+                {error && (
+                    <span className='text-red-400'>
+                        Username already taken.
+                    </span>
+                )}
+                {data && !isLoading && (
+                    <span className='text-green-400'>Account created!</span>
+                )}
             </div>
         </form>
     );

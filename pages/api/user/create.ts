@@ -24,7 +24,8 @@ export default async function create(
             username: req.body.username,
             password: hash,
         });
-        return res.status(201).json({message: `user ${req.body.username} created`});
+        return res
+            .status(201)
+            .json({ message: `user ${req.body.username} created` });
     });
-
 }

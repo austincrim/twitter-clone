@@ -6,22 +6,19 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start",
-    "migrate:save": "prisma migrate save --experimental",
-    "migrate:up": "prisma migrate up --experimental",
-    "generate": "prisma generate"
+    "start": "next start"
   },
   "keywords": [],
-  "author": "",
+  "author": "Austin Crim",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "mongodb": "^3.5.9",
-    "next": "^9.4.4",
+    "next": "^9.5.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-query": "^2.4.16",
-    "tailwindcss": "^1.4.6"
+    "tailwindcss": "^1.5.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",

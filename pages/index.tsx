@@ -13,7 +13,7 @@ export default function Index() {
     }
     return (
         <>
-            <div className='grid grid-cols-3 gap-20'>
+            <div className='grid grid-cols-4 gap-20'>
                 <div className='mt-2 w-1/2 py-6 px-10'>
                     <SignupForm />
                 </div>
@@ -25,6 +25,7 @@ export default function Index() {
                             <Tweet tweet={tw} key={tw.text + tw.author} />
                         ))}
                 </div>
+                <div>User info over here</div>
             </div>
         </>
     );
