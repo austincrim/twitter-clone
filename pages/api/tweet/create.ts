@@ -7,9 +7,10 @@ export default async function create(
 ) {
     const db = await connectToDatabase(process.env.MONGO_CONNECTION_URI);
     const collection = await db.collection('tweets');
-    const inserted = await collection.insertOne(
-        { text: req.body.text, author: req.body.author || 'Austin Crim' },
-    );
+    const inserted = await collection.insertOne({
+        text: req.body.text,
+        author: req.body.author,
+    });
 
     res.status(201).send(JSON.stringify(inserted));
 }

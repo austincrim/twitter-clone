@@ -1,18 +1,29 @@
 import Button from './Button';
 import { useState } from 'react';
 import { fetcher } from '../util/fetcher';
-import { useMutation } from 'react-query';
-
-const createUser = ({ username, password }) => {
-    return fetcher('/api/user/create', { username, password });
-};
+import { useMutation, queryCache } from 'react-query';
 
 export default function SignupForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [mutate, { error, isLoading, data, reset }] = useMutation(createUser);
+    const [login, setLogin] = useState(false);
 
-    async function handleSignup(e: Event) {
+    const createUser = ({ username, password }) => {
+        return fetcher(`/api/user/${login ? 'login' : 'signup'}`, {
+            username,
+            password,
+        });
+    };
+
+    const [mutate, { error, isLoading, data, reset }] = useMutation(
+        createUser,
+        {
+            onSuccess: () =>
+                queryCache.invalidateQueries('/api/user/currentUser'),
+        }
+    );
+
+    async function handleAuth(e: Event) {
         e.preventDefault();
         reset();
 
@@ -42,17 +53,17 @@ export default function SignupForm() {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
             />
-            <Button onClick={handleSignup} buttonStyle='link'>
-                Sign Up
+            <Button onClick={handleAuth} buttonStyle='blue'>
+                {login ? 'Login' : 'Sign Up'}
+            </Button>
+            <Button onClick={() => setLogin(!login)} buttonStyle='link'>
+                {login ? 'Need to sign up?' : 'Already a user? Login here.'}
             </Button>
             <div>
                 {error && (
                     <span className='text-red-400'>
                         Username already taken.
                     </span>
-                )}
-                {data && !isLoading && (
-                    <span className='text-green-400'>Account created!</span>
                 )}
             </div>
         </form>

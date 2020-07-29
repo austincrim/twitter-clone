@@ -2,13 +2,15 @@ import { useState } from 'react';
 import { fetcher } from '../util/fetcher';
 import { useMutation, queryCache } from 'react-query';
 import Button from './Button';
+import { useUser } from '../util/hooks';
 
-const createTweet = ({ text }) => {
-    return fetcher('/api/tweet/create', { text });
+const createTweet = ({ text, author }) => {
+    return fetcher('/api/tweet/create', { text, author });
 };
 
 export default function TweetForm() {
     const [tweet, setTweet] = useState('');
+    const { data: user } = useUser();
     const [mutate, { isLoading }] = useMutation(createTweet, {
         onSuccess: () => {
             queryCache.invalidateQueries('/api/feed');
@@ -18,7 +20,7 @@ export default function TweetForm() {
     async function handleSubmit(e) {
         e.preventDefault();
         if (!tweet) return;
-        await mutate({ text: tweet });
+        await mutate({ text: tweet, author: user.username });
         setTweet('');
     }
 
