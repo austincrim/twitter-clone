@@ -1,15 +1,10 @@
-import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
-const prisma = new PrismaClient();
+import { ObjectId } from 'mongodb';
+import connectToDatabase from '../../../util/db';
 
-export default async function del(
-    req: NextApiRequest,
-    res: NextApiResponse
-) {
-    const deletedTweet = await prisma.tweet.delete({
-        where: {
-            id: req.body.id
-        }
-    });
-    res.send(JSON.stringify(deletedTweet));
+export default async function del(req: NextApiRequest, res: NextApiResponse) {
+    const db = await connectToDatabase(process.env.MONGO_CONNECTION_URI);
+    const collection = await db.collection('tweets');
+    const count = await collection.deleteOne({ _id: new ObjectId(req.body.id)});
+    res.status(200).send(JSON.stringify(count));
 }

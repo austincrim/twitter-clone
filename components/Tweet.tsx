@@ -7,7 +7,7 @@ const deleteTweet = ({ id }) => {
 };
 
 export default function Tweet({ tweet }) {
-    const { text, author, id } = tweet;
+    const { text, author, _id: id } = tweet;
     const [mutate, { isLoading }] = useMutation(deleteTweet, {
         onSuccess: () => {
             queryCache.invalidateQueries('/api/feed');
@@ -18,8 +18,8 @@ export default function Tweet({ tweet }) {
     }
 
     return (
-        <div className='flex justify-between items-center px-6 py-5 bg-gray-100 w-1/2 border-b border-blue-300'>
-            <div className='flex flex-col justify-between items-center'>
+        <div className='flex justify-between px-6 py-5 bg-gray-100 w-1/2 border-b border-blue-300'>
+            <div className='flex flex-col justify-between'>
                 <div className='text-lg'>{text}</div>
                 <div className='text-sm text-gray-600'>{author}</div>
             </div>
