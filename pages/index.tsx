@@ -14,11 +14,11 @@ export default function Index() {
     }
     return (
         <>
-            <div className='grid grid-cols-4 gap-20'>
-                <div className='mt-2 w-full py-6 px-10'>
+            <div className='flex flex-col items-center md:flex-row md:items-start space-y-8'>
+                <div className='mt-2 py-6 px-10'>
                     <Profile />
                 </div>
-                <div className='flex flex-col col-span-3 items-start mt-10 space-y-4'>
+                <div className='flex flex-col items-center md:items-start w-full md:px-10 space-y-4'>
                     <TweetForm />
                     {status !== 'success' && statusMessage}
                     {status === 'success' &&

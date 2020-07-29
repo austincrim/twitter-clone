@@ -1,5 +1,11 @@
-export default function Button({ buttonStyle, onClick = undefined, children }) {
-    let classList = 'rounded transition-all duration-75 ease-in ';
+export default function Button({
+    buttonStyle,
+    onClick = undefined,
+    children,
+    disabled = false,
+}) {
+    let classList =
+        'rounded transition-all duration-75 ease-in whitespace-no-wrap ';
 
     switch (buttonStyle) {
         case 'blue':
@@ -10,12 +16,14 @@ export default function Button({ buttonStyle, onClick = undefined, children }) {
             classList += 'px-4 py-2 text-red-700 bg-red-200 hover:bg-red-300';
             break;
         case 'link':
-            classList += 'text-blue-400 hover:text-blue-600 whitespace-no-wrap';
+            classList += 'text-blue-400 hover:text-blue-600';
             break;
     }
 
+    disabled ? (classList += ' opacity-50 cursor-not-allowed hover:') : null;
+
     return (
-        <button className={classList} onClick={onClick}>
+        <button className={classList} onClick={onClick} disabled={disabled}>
             {children}
         </button>
     );

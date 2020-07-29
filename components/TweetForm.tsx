@@ -17,13 +17,12 @@ export default function TweetForm() {
         },
     });
 
-    async function handleSubmit(e) {
+    async function handleSubmit(e: Event) {
         e.preventDefault();
         if (!tweet) return;
         await mutate({ text: tweet, author: user.username });
         setTweet('');
     }
-
     return (
         <form onSubmit={e => e.preventDefault()}>
             <input
@@ -32,7 +31,11 @@ export default function TweetForm() {
                 value={tweet}
                 onChange={e => setTweet(e.target.value)}
             />
-            <Button buttonStyle='blue' onClick={handleSubmit}>
+            <Button
+                buttonStyle='blue'
+                onClick={handleSubmit}
+                disabled={!user.username}
+            >
                 {isLoading && 'Tweeting...'}
                 {!isLoading && 'Tweet'}
             </Button>
