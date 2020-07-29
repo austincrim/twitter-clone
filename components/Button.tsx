@@ -1,5 +1,3 @@
-import { on } from 'process';
-
 export default function Button({ buttonStyle, onClick = undefined, children }) {
     let classList = 'rounded transition-all duration-75 ease-in ';
 
@@ -16,7 +14,9 @@ export default function Button({ buttonStyle, onClick = undefined, children }) {
             break;
     }
 
-    return <button className={classList} onClick={onClick}>
-        {children}
-    </button>;
+    return (
+        <button className={classList} onClick={onClick}>
+            {children}
+        </button>
+    );
 }
