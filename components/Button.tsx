@@ -1,6 +1,7 @@
 export default function Button({
-    buttonStyle,
+    buttonStyle = undefined,
     onClick = undefined,
+    id = undefined,
     children,
     disabled = false,
 }) {
@@ -15,15 +16,24 @@ export default function Button({
         case 'red':
             classList += 'px-4 py-2 text-red-700 bg-red-200 hover:bg-red-300';
             break;
+        case 'outline':
+            classList +=
+                'px-4 py-2 text-gray-100 bg-transparent hover:border-gray-200 border-2 border-transparent';
+            break;
         case 'link':
             classList += 'text-blue-400 hover:text-blue-600';
             break;
     }
 
-    disabled ? (classList += ' opacity-50 cursor-not-allowed hover:') : null;
+    disabled ? (classList += ' opacity-50 cursor-not-allowed') : null;
 
     return (
-        <button className={classList} onClick={onClick} disabled={disabled}>
+        <button
+            id={id}
+            className={classList}
+            onClick={onClick}
+            disabled={disabled}
+        >
             {children}
         </button>
     );

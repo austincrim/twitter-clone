@@ -25,7 +25,7 @@ export default function TweetForm() {
     }
     return (
         <form
-            className='flex w-full lg:w-1/3 px-2'
+            className='flex w-full lg:w-1/2'
             onSubmit={e => e.preventDefault()}
         >
             <input
