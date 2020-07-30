@@ -21,7 +21,7 @@ export default function Button({
                 'px-4 py-2 text-gray-100 bg-transparent hover:border-gray-200 border-2 border-transparent';
             break;
         case 'link':
-            classList += 'text-blue-400 hover:text-blue-600';
+            classList += 'underline text-blue-400 hover:text-blue-500';
             break;
     }
 

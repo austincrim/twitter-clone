@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcrypt';
 import cookie from 'cookie';
 import jwt from 'jsonwebtoken';
+import url from 'url';
 import connectToDatabase from '../../../util/db';
 
 export default async function create(
@@ -9,7 +10,9 @@ export default async function create(
     res: NextApiResponse
 ) {
     const db = await connectToDatabase(process.env.MONGO_CONNECTION_URI);
-    const collection = await db.collection('users');
+    const collection = db
+        .db(url.parse(process.env.MONGO_CONNECTION_URI).pathname.substr(1))
+        .collection('users');
     let inserted;
 
     try {
