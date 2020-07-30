@@ -7,7 +7,7 @@ function logoutUser() {
 }
 
 export default function LogoutButton() {
-    const [mutate] = useMutation(logoutUser, {
+    const [mutate, { data }] = useMutation(logoutUser, {
         onSuccess: () => queryCache.invalidateQueries('/api/user/currentUser'),
     });
 

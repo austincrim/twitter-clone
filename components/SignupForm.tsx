@@ -15,13 +15,9 @@ export default function SignupForm() {
         });
     };
 
-    const [mutate, { error, isLoading, data, reset }] = useMutation(
-        createUser,
-        {
-            onSuccess: () =>
-                queryCache.invalidateQueries('/api/user/currentUser'),
-        }
-    );
+    const [mutate, { error, status, data, reset }] = useMutation(createUser, {
+        onSuccess: () => queryCache.invalidateQueries('/api/user/currentUser'),
+    });
 
     async function handleAuth(e: Event) {
         e.preventDefault();
@@ -54,7 +50,8 @@ export default function SignupForm() {
                 onChange={e => setPassword(e.target.value)}
             />
             <Button onClick={handleAuth} buttonStyle='blue'>
-                {login ? 'Login' : 'Sign Up'}
+                {status === 'loading' && 'Loading...'}
+                {status !== 'loading' && (login ? 'Login' : 'Sign Up')}
             </Button>
             <Button onClick={() => setLogin(!login)} buttonStyle='link'>
                 {login ? 'Need to sign up?' : 'Already a user? Login here.'}

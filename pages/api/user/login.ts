@@ -2,13 +2,18 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import cookie from 'cookie';
+import url from 'url';
 import connectToDatabase from '../../../util/db';
 
 export default async function login(req: NextApiRequest, res: NextApiResponse) {
     const db = await connectToDatabase(process.env.MONGO_CONNECTION_URI);
-    const collection = await db.collection('users');
+    const collection = db
+        .db(url.parse(process.env.MONGO_CONNECTION_URI).pathname.substr(1))
+        .collection('users');
 
     const user = await collection.findOne({ username: req.body.username });
+    db.close();
+
     if (user && bcrypt.compareSync(req.body.password, user.password)) {
         const token = jwt.sign(
             { username: user.username, id: user._id, time: new Date() },
@@ -28,6 +33,7 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
         );
 
         res.json(user);
+        return;
     } else {
         res.json({ error: 'Incorrect username or password :/' });
         return;

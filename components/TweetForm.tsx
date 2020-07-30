@@ -24,9 +24,12 @@ export default function TweetForm() {
         setTweet('');
     }
     return (
-        <form onSubmit={e => e.preventDefault()}>
+        <form
+            className='flex w-full lg:w-1/3 px-2'
+            onSubmit={e => e.preventDefault()}
+        >
             <input
-                className='bg-gray-100 border rounded mr-3 py-2 px-1'
+                className='w-full bg-gray-100 border rounded mr-3 py-2 px-1'
                 type='text'
                 value={tweet}
                 onChange={e => setTweet(e.target.value)}
@@ -34,7 +37,7 @@ export default function TweetForm() {
             <Button
                 buttonStyle='blue'
                 onClick={handleSubmit}
-                disabled={!user.username}
+                disabled={!user?.username}
             >
                 {isLoading && 'Tweeting...'}
                 {!isLoading && 'Tweet'}
