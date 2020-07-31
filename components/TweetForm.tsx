@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { fetcher } from '../util/fetcher';
 import { useMutation, queryCache } from 'react-query';
+import filter from 'bad-words';
 import Button from './Button';
 import { useUser } from '../util/hooks';
 
@@ -32,7 +33,7 @@ export default function TweetForm() {
                 className='w-full bg-gray-100 border rounded mr-3 py-2 px-1'
                 type='text'
                 value={tweet}
-                onChange={e => setTweet(e.target.value)}
+                onChange={e => setTweet(new filter().clean(e.target.value))}
             />
             <Button
                 buttonStyle='blue'
