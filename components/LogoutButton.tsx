@@ -7,7 +7,7 @@ function logoutUser() {
 }
 
 export default function LogoutButton() {
-    const [mutate, { data }] = useMutation(logoutUser, {
+    const [mutate] = useMutation(logoutUser, {
         onSuccess: () => queryCache.invalidateQueries('/api/user/currentUser'),
     });
 
@@ -17,7 +17,10 @@ export default function LogoutButton() {
     }
 
     return (
-        <button className='text-gray-100 font-bold hover:text-gray-300' onClick={handleLogout}>
+        <button
+            className='text-gray-100 font-bold hover:text-gray-300'
+            onClick={handleLogout}
+        >
             Logout
         </button>
     );
