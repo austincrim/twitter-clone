@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongodb"]
+}
+
+model Tweet {
+  id     String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  text   String
+  author String
+
+  @@map("tweets")
+}
+
+model User {
+  id       String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  username String @unique
+  password String
+
+  @@map("users")
+}

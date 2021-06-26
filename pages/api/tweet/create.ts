@@ -1,20 +1,15 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import connectToDatabase from '../../../util/db';
-import url from 'url';
+import { NextApiRequest, NextApiResponse } from 'next'
+import prisma from '../../../lib/prisma'
 
 export default async function create(
-    req: NextApiRequest,
-    res: NextApiResponse
+  req: NextApiRequest,
+  res: NextApiResponse
 ) {
-    const db = await connectToDatabase(process.env.MONGO_CONNECTION_URI);
-    const collection = db
-        .db(url.parse(process.env.MONGO_CONNECTION_URI).pathname.substr(1))
-        .collection('tweets');
-    const inserted = await collection.insertOne({
-        text: req.body.text,
-        author: req.body.author,
-    });
-
-    db.close();
-    res.status(201).send(JSON.stringify(inserted));
+  const inserted = await prisma.tweet.create({
+    data: {
+      text: req.body.text,
+      author: req.body.author
+    }
+  })
+  res.status(201).send(JSON.stringify(inserted))
 }
